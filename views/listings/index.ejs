@@ -1,283 +1,914 @@
 <% layout("/layouts/biolerplate") %>
-<body>
-    <style>
-    #filters {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 0;
+<style>
+/* =========================================================
+   WANDERLUST - LISTINGS PAGE
+   COMPLETE RESPONSIVE CSS
+========================================================= */
+
+
+/* =========================================================
+   FILTER SECTION
+========================================================= */
+
+.filters-section {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+
+/* =========================================================
+   FILTER ROW
+========================================================= */
+
+.filters-row {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FILTER SCROLL CONTAINER
+========================================================= */
+
+.filters-scroll {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 1.8rem;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+
+    padding: 0.7rem 0.3rem 0.8rem;
+}
+
+
+/* Chrome / Edge / Safari */
+
+.filters-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   INDIVIDUAL FILTER
+========================================================= */
+
+.filter {
+    flex: 0 0 75px;
+
+    width: 75px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    color: #222;
+
+    opacity: 0.7;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.filter:hover {
+    color: #222;
+
+    opacity: 1;
+
+    transform: translateY(-2px);
+}
+
+
+/* Icon */
+
+.filter i {
+    font-size: 1.25rem;
+
+    margin-bottom: 0.45rem;
+}
+
+
+/* Text */
+
+.filter span {
+    font-size: 0.75rem;
+
+    white-space: nowrap;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   LEFT / RIGHT ARROWS
+========================================================= */
+
+.filter-arrow {
+    flex: 0 0 34px;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: 1px solid #ddd;
+
+    border-radius: 50%;
+
+    background-color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 10;
+
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Arrow hover */
+
+.filter-arrow:hover {
+    background-color: #f5f5f5;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Arrow icon */
+
+.filter-arrow i {
+    font-size: 0.75rem;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TAX TOGGLE
+========================================================= */
+
+.tax-toggle {
+    width: fit-content;
+
+    margin-left: auto;
+
+    margin-top: 0.5rem;
+
+    padding: 0.6rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ddd;
+
+    border-radius: 2rem;
+
+    background-color: #fff;
+}
+
+
+/* Bootstrap form */
+
+.tax-toggle .form-check {
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.4rem;
+}
+
+
+/* Switch */
+
+.tax-toggle .form-check-input {
+    margin: 0;
+
+    cursor: pointer;
+}
+
+
+/* Label */
+
+.tax-toggle .form-check-label {
+    margin: 0;
+
+    font-size: 0.8rem;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   LISTING LINKS
+========================================================= */
+
+.listing-link {
+    display: block;
+
+    text-decoration: none;
+
+    color: inherit;
+}
+
+
+/* =========================================================
+   LISTING CARD
+========================================================= */
+
+.listing-card {
+    border: none;
+
+    background: transparent;
+
+    margin-bottom: 1rem;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Card hover */
+
+.listing-card:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   LISTING IMAGE
+========================================================= */
+
+.listing-card img {
+    width: 100%;
+
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 1rem;
+}
+
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.listing-card .card-body {
+    padding: 0.7rem 0.15rem 0;
+}
+
+
+/* Card text */
+
+.listing-card .card-text {
+    margin: 0;
+
+    font-size: 0.95rem;
+
+    line-height: 1.5;
+}
+
+
+/* Listing title */
+
+.listing-card .card-text b {
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   TAX INFORMATION
+========================================================= */
+
+.tax-info {
+    display: none;
+
+    color: #555;
+
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+    /* Filters */
+
+    .filters-scroll {
+        gap: 1.4rem;
     }
 
     .filter {
-        text-align: center;
-        margin-top: 1.5rem;
-        margin-right: 1.5rem;
-        opacity: 0.7;
-        text-decoration: none;
-        color: black;
-        min-width: 60px;
-    }
+        flex-basis: 68px;
 
-    .filter:hover {
-        opacity: 1;
-        cursor: pointer;
-    }
-
-    .filter p {
-        font-size: 0.8rem;
-        margin-top: 0.4rem;
-        margin-bottom: 0;
+        width: 68px;
     }
 
     .filter i {
-        font-size: 1.3rem;
+        font-size: 1.15rem;
     }
 
-    .tax-info {
-        display: none;
+    .filter span {
+        font-size: 0.7rem;
     }
 
-    .tax-toggle {
-        border: 1px solid black;
-        border-radius: 1rem;
-        min-height: 3.25rem;
-        padding: 0.8rem 1rem;
-        margin-left: auto;
-        display: flex;
-        align-items: center;
+
+    /* Arrows */
+
+    .filter-arrow {
+        flex-basis: 32px;
+
+        width: 32px;
+        height: 32px;
+    }
+
+
+    /* Listing image */
+
+    .listing-card img {
+        aspect-ratio: 4 / 3;
+
+        border-radius: 0.9rem;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    /* -----------------------------------------
+       FILTER SECTION
+    ----------------------------------------- */
+
+    .filters-section {
+        margin-bottom: 1.2rem;
+    }
+
+
+    /* -----------------------------------------
+       FILTER ROW
+    ----------------------------------------- */
+
+    .filters-row {
+        gap: 5px;
+    }
+
+
+    /* -----------------------------------------
+       SCROLL AREA
+    ----------------------------------------- */
+
+    .filters-scroll {
+        gap: 1.15rem;
+
+        padding:
+            0.5rem
+            0.2rem
+            0.8rem;
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        scroll-behavior: smooth;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /* -----------------------------------------
+       FILTER
+    ----------------------------------------- */
+
+    .filter {
+        flex: 0 0 62px;
+
+        width: 62px;
+    }
+
+
+    .filter i {
+        font-size: 1.1rem;
+
+        margin-bottom: 0.35rem;
+    }
+
+
+    .filter span {
+        font-size: 0.68rem;
+
         white-space: nowrap;
     }
 
-    .listing-link {
-        text-decoration: none;
-        color: inherit;
+
+    /* -----------------------------------------
+       ARROWS
+    ----------------------------------------- */
+
+    .filter-arrow {
+        flex: 0 0 30px;
+
+        width: 30px;
+        height: 30px;
     }
 
-    .listing-card {
-        border: none;
-        margin-bottom: 2rem;
+
+    .filter-arrow i {
+        font-size: 0.7rem;
     }
 
-    .listing-card img {
+
+    /* -----------------------------------------
+       TAX TOGGLE
+    ----------------------------------------- */
+
+    .tax-toggle {
         width: 100%;
-        height: 20rem;
-        object-fit: cover;
+
+        margin-left: 0;
+
+        margin-top: 0.4rem;
+
+        padding: 0.65rem;
+
         border-radius: 1rem;
     }
 
-    .listing-card .card-body {
-        padding: 0.75rem 0.25rem;
+
+    .tax-toggle .form-check {
+        justify-content: center;
     }
+
+
+    .tax-toggle .form-check-label {
+        font-size: 0.78rem;
+    }
+
+
+    /* -----------------------------------------
+       LISTING
+    ----------------------------------------- */
+
+    .listing-card {
+        margin-bottom: 1rem;
+    }
+
+
+    .listing-card img {
+        width: 100%;
+
+        aspect-ratio: 1 / 0.78;
+
+        object-fit: cover;
+
+        border-radius: 0.85rem;
+    }
+
+
+    /* -----------------------------------------
+       CARD BODY
+    ----------------------------------------- */
+
+    .listing-card .card-body {
+        padding: 0.6rem 0.1rem 0;
+    }
+
 
     .listing-card .card-text {
-        margin: 0;
+        font-size: 0.9rem;
+
+        line-height: 1.45;
     }
 
-    /* Tablet */
-    @media (max-width: 991px) {
-        .tax-toggle {
-            margin-left: 1rem;
-        }
 
-        .filter {
-            margin-right: 1rem;
-        }
-
-        .listing-card img {
-            height: 18rem;
-        }
+    .listing-card .card-text b {
+        font-size: 0.95rem;
     }
 
-    /* Mobile */
-    @media (max-width: 767px) {
 
-        #filters {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            gap: 1rem;
-            padding: 0.5rem 0.25rem 1rem;
-            scrollbar-width: none;
-        }
-
-        #filters::-webkit-scrollbar {
-            display: none;
-        }
-
-        .filter {
-            flex: 0 0 auto;
-            margin: 1rem 0 0;
-            min-width: 65px;
-        }
-
-        .filter i {
-            font-size: 1.2rem;
-        }
-
-        .filter p {
-            font-size: 0.7rem;
-        }
-
-        .tax-toggle {
-            flex: 0 0 auto;
-            margin-left: 0.5rem;
-            min-height: 3rem;
-            padding: 0.6rem 0.8rem;
-            font-size: 0.75rem;
-        }
-
-        .listing-card {
-            margin-bottom: 1.5rem;
-        }
-
-        .listing-card img {
-            height: 16rem;
-            border-radius: 0.8rem;
-        }
-
-        .listing-card .card-body {
-            padding: 0.6rem 0.1rem;
-        }
+    .tax-info {
+        font-size: 0.8rem;
     }
 
-    /* Small mobile */
-    @media (max-width: 480px) {
+}
 
-        #filters {
-            gap: 0.8rem;
-        }
 
-        .filter {
-            min-width: 58px;
-        }
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
-        .filter p {
-            font-size: 0.65rem;
-        }
+@media (max-width: 480px) {
 
-        .filter i {
-            font-size: 1.1rem;
-        }
+    /* -----------------------------------------
+       FILTERS
+    ----------------------------------------- */
 
-        .tax-toggle {
-            font-size: 0.7rem;
-            padding: 0.5rem 0.7rem;
-        }
-
-        .listing-card img {
-            height: 14rem;
-        }
+    .filters-row {
+        gap: 4px;
     }
+
+
+    .filters-scroll {
+        gap: 0.9rem;
+
+        padding:
+            0.45rem
+            0.15rem
+            0.7rem;
+    }
+
+
+    .filter {
+        flex: 0 0 58px;
+
+        width: 58px;
+    }
+
+
+    .filter i {
+        font-size: 1rem;
+
+        margin-bottom: 0.3rem;
+    }
+
+
+    .filter span {
+        font-size: 0.62rem;
+    }
+
+
+    /* -----------------------------------------
+       ARROWS
+    ----------------------------------------- */
+
+    .filter-arrow {
+        flex: 0 0 28px;
+
+        width: 28px;
+        height: 28px;
+    }
+
+
+    .filter-arrow i {
+        font-size: 0.65rem;
+    }
+
+
+    /* -----------------------------------------
+       TAX
+    ----------------------------------------- */
+
+    .tax-toggle {
+        padding: 0.55rem;
+    }
+
+
+    .tax-toggle .form-check-label {
+        font-size: 0.72rem;
+    }
+
+
+    /* -----------------------------------------
+       LISTING IMAGE
+    ----------------------------------------- */
+
+    .listing-card img {
+        aspect-ratio: 1 / 0.76;
+
+        border-radius: 0.75rem;
+    }
+
+
+    /* -----------------------------------------
+       LISTING TEXT
+    ----------------------------------------- */
+
+    .listing-card .card-text {
+        font-size: 0.88rem;
+    }
+
+
+    .listing-card .card-text b {
+        font-size: 0.93rem;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .filters-scroll {
+        gap: 0.7rem;
+    }
+
+
+    .filter {
+        flex-basis: 55px;
+
+        width: 55px;
+    }
+
+
+    .filter span {
+        font-size: 0.6rem;
+    }
+
+
+    .filter-arrow {
+        flex-basis: 27px;
+
+        width: 27px;
+        height: 27px;
+    }
+
+
+    .tax-toggle .form-check-label {
+        font-size: 0.68rem;
+    }
+
+}
 </style>
-    <!-- <h2>all Listings</h2> -->
-    <!-- <form method="get" action="/listings/new">
-        <button>create new listing</button>
-    </form> -->
-    <div id="filters">
-        <a href="/listings?category=Trending" class="filter">
-        <div >
-            <div><i class="fa-notdog-duo fa-solid fa-fire"></i></div>
-            <p>Trending</p>
-        </div>
-        </a>
-        <a href="/listings?category=Rooms" class="filter">
-        <div>
-            <div><i class="fa-mosaic fa-solid fa-bed"></i></div>
-            <p>Rooms</p>
-        </div>
-        </a>
-        <a href="/listings?category=Iconic Cities" class="filter">
-        <div>
-            <div><i class="fa-sharp-duotone fa-solid fa-mountain-city"></i></div>
-            <p>Iconic Cities</p>
-        </div>
-        </a>
-        <a href="/listings?category=Castles" class="filter">
-        <div>
-            <div><i class="fa-mosaic fa-solid fa-bed"></i></div>
-            <p>castles</p>
-        </div>
-        </a>
-        <a href="/listings?category=Mountain" class="filter">
-        <div>
-            <div><i class="fa-solid fa-mountain-sun"></i></div>
-            <p>mountain</p>
-        </div>
-        </a>
-        <a href="/listings?category=Amazing Pools" class="filter">
-        <div>
-            <div><i class="fa-solid fa-person-swimming"></i></div>
-            <p>Amazing pools</p>
-        </div>
-        </a>
-        <a href="/listings?category=Camping" class="filter">
-        <div>
-            <div><i class="fa-solid fa-tent-arrows-down"></i></div>
-            <p>camping</p>
-        </div>
-        </a>
-        <a href="/listings?category=Farm" class="filter">
-        <div>
-            <div><i class="fa-solid fa-seedling"></i></div>
-            <p>farm</p>
-        </div>
-        </a>
-        <a href="/listings?category=Arctic" class="filter">
-        <div >
-            <div><i class="fa-solid fa-snowflake"></i></div>
-            <p>Arctic</p>
-        </div>
-        </a>
-        <div class="tax-toggle">
-            <div class="form-check-reverse form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" 
-                id="switchCheckDefault">
-                <label class="form-check-label" for="switchCheckDefault">
-                    Display Total after Taxes</label>
-        </div>
-    
-        </div>
-    </div>
 
+<!-- =========================
+     FILTERS
+========================= -->
 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1" >
-        <% for(let listing of allListings){ %>
-        <a href="/listings/<%= listing._id %>" class="listing-link">
-    <div class="card col listing-card" >
-        <img src="<%= listing.image.url %>" class="card-img-top" 
-        alt="listing_image"
-        style="height: 20rem"
+<!-- FILTER SECTION -->
+
+<div class="filters-section">
+
+    <div class="filters-row">
+
+        <!-- Left Arrow -->
+        <button
+            type="button"
+            class="filter-arrow filter-left"
+            id="filterLeft"
         >
-        <div class="card-img-overlay">abcd</div>
-        <div class="card-body">
-            <p class="card-text">
-                <b><%= listing.title %></b> <br/>
-                &#8377; <%= (listing.price || 0).toLocaleString("en-IN") %> /night
-                <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
-            </p>
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+
+        <!-- Scrollable Categories -->
+        <div class="filters-scroll" id="filtersScroll">
+
+            <a href="/listings?category=Trending" class="filter">
+                <i class="fa-solid fa-fire"></i>
+                <span>Trending</span>
+            </a>
+
+            <a href="/listings?category=Rooms" class="filter">
+                <i class="fa-solid fa-bed"></i>
+                <span>Rooms</span>
+            </a>
+
+            <a href="/listings?category=Iconic Cities" class="filter">
+                <i class="fa-solid fa-mountain-city"></i>
+                <span>Iconic Cities</span>
+            </a>
+
+            <a href="/listings?category=Castles" class="filter">
+                <i class="fa-solid fa-chess-rook"></i>
+                <span>Castles</span>
+            </a>
+
+            <a href="/listings?category=Mountain" class="filter">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <span>Mountain</span>
+            </a>
+
+            <a href="/listings?category=Amazing Pools" class="filter">
+                <i class="fa-solid fa-person-swimming"></i>
+                <span>Amazing Pools</span>
+            </a>
+
+            <a href="/listings?category=Camping" class="filter">
+                <i class="fa-solid fa-tent"></i>
+                <span>Camping</span>
+            </a>
+
+            <a href="/listings?category=Farm" class="filter">
+                <i class="fa-solid fa-seedling"></i>
+                <span>Farm</span>
+            </a>
+
+            <a href="/listings?category=Arctic" class="filter">
+                <i class="fa-solid fa-snowflake"></i>
+                <span>Arctic</span>
+            </a>
+
         </div>
-    </div>
-</a>
-<% } %>
+
+
+        <!-- Right Arrow -->
+        <button
+            type="button"
+            class="filter-arrow filter-right"
+            id="filterRight"
+        >
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
     </div>
 
-    
-</body>
+
+    <!-- Tax Toggle -->
+
+    <div class="tax-toggle">
+
+        <div class="form-check form-switch">
+
+            <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="switchCheckDefault"
+            >
+
+            <label
+                class="form-check-label"
+                for="switchCheckDefault"
+            >
+                Display Total after Taxes
+            </label>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     LISTINGS
+========================= -->
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <% for(let listing of allListings){ %>
+
+        <div class="col">
+
+            <a
+                href="/listings/<%= listing._id %>"
+                class="listing-link"
+            >
+
+                <div class="card listing-card">
+
+                    <img
+                        src="<%= listing.image.url %>"
+                        class="card-img-top"
+                        alt="<%= listing.title %>"
+                    >
+
+                    <div class="card-body">
+
+                        <p class="card-text">
+
+                            <b>
+                                <%= listing.title %>
+                            </b>
+
+                            <br>
+
+                            &#8377;
+                            <%= (listing.price || 0).toLocaleString("en-IN") %>
+                            /night
+
+                            <i class="tax-info">
+                                &nbsp; +18% GST
+                            </i>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+
+<!-- =========================
+     TAX JAVASCRIPT
+========================= -->
 
 <script>
-    let taxSwitch = document.getElementById("switchCheckDefault");
-    taxSwitch.addEventListener("click", () => {
-        console.log("clicked");
-        let taxInfo = document.getElementsByClassName("tax-info");
-        for(info of taxInfo){
-            if(info.style.display != "inline"){
-                info.style.display = "inline"
-            }else{
-                info.style.display = "none"
+
+    const taxSwitch =
+        document.getElementById("switchCheckDefault");
+
+    taxSwitch.addEventListener("change", () => {
+
+        const taxInfo =
+            document.getElementsByClassName("tax-info");
+
+        for (const info of taxInfo) {
+
+            if (taxSwitch.checked) {
+                info.style.display = "inline";
+            } else {
+                info.style.display = "none";
             }
+
         }
-        
-        
-    })
+
+    });
+
+    
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filtersScroll = document.getElementById("filtersScroll");
+    const filterLeft = document.getElementById("filterLeft");
+    const filterRight = document.getElementById("filterRight");
+
+
+    if (!filtersScroll || !filterLeft || !filterRight) {
+        console.log("Filter elements not found");
+        return;
+    }
+
+
+    // RIGHT ARROW
+    filterRight.addEventListener("click", function () {
+
+        filtersScroll.scrollTo({
+            left: filtersScroll.scrollLeft + 250,
+            behavior: "smooth"
+        });
+
+    });
+
+
+    // LEFT ARROW
+    filterLeft.addEventListener("click", function () {
+
+        filtersScroll.scrollTo({
+            left: filtersScroll.scrollLeft - 250,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+
+
 </script>
