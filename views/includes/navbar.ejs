@@ -1,58 +1,273 @@
 <style>
-  .search-btn{
-    background-color: #fe424d;
-    color: #fff;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
-  .search-btn:hover{
-    background-color: #fe424d;
-    color: #fff;
-  }
-  .search-btn i{
-    display: inline;
-    margin-right: 0.5rem;
-  }
-  .search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
-  }
+    .search-btn {
+        background-color: #fe424d;
+        color: #fff;
+        border-radius: 25px;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+    }
+
+    .search-btn:hover {
+        background-color: #fe424d;
+        color: #fff;
+    }
+
+    .search-btn i {
+        margin-right: 0.5rem;
+    }
+
+    .search-inp {
+        border-radius: 25px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        width: 300px;
+    }
+
+    /* =========================
+       MOBILE NAVBAR
+       ========================= */
+
+    @media (max-width: 767px) {
+
+        .navbar {
+            height: auto !important;
+            min-height: auto !important;
+        }
+
+        .navbar .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .navbar-toggler {
+            margin-left: auto;
+        }
+
+        /* IMPORTANT:
+           Keep collapsed navbar inside normal document flow
+        */
+
+        .navbar-collapse {
+            position: static !important;
+            width: 100% !important;
+            flex-basis: 100% !important;
+            flex-grow: 1 !important;
+            overflow: visible !important;
+        }
+
+        .navbar-collapse.show {
+            display: block !important;
+        }
+
+        .navbar-nav {
+            width: 100%;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        /* Explore */
+        .navbar-left {
+            margin-top: 0.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .navbar-left .nav-link {
+            padding: 0.8rem 0;
+        }
+
+        /* Search */
+        .navbar-search {
+            width: 100%;
+            margin: 0.5rem 0 1rem !important;
+        }
+
+        .navbar-search form {
+            width: 100%;
+            display: flex;
+        }
+
+        .search-inp {
+            width: 100%;
+            min-width: 0;
+            height: 44px;
+        }
+
+        .search-btn {
+            height: 44px;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Right menu */
+        .navbar-right {
+            width: 100%;
+            margin-left: 0 !important;
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .navbar-right .nav-link {
+            padding: 0.7rem 0;
+        }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+
+        .search-inp {
+            font-size: 0.9rem;
+        }
+
+        .search-btn {
+            padding: 0.5rem 0.8rem;
+        }
+
+        .search-btn i {
+            margin-right: 0.25rem;
+        }
+    }
+    .navbar-explore {
+    margin-left: 0.5rem;
+}
+
+.navbar-explore .nav-link {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+
+    .navbar-explore {
+        display: block;
+    }
+
+    .navbar-explore .nav-link {
+        padding: 0.5rem 0;
+    }
+
+    .navbar-toggler {
+        margin-left: auto !important;
+    }
+
+    .navbar-collapse {
+        flex-basis: 100%;
+        width: 100%;
+    }
+
+    .navbar-search {
+        width: 100%;
+        margin: 1rem 0 !important;
+    }
+
+    .navbar-search form {
+        width: 100%;
+    }
+
+    .search-inp {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .navbar-right {
+        width: 100%;
+        margin-left: 0 !important;
+        border-top: 1px solid #eee;
+        padding-top: 0.5rem;
+    }
+
+    .navbar-right .nav-link {
+        padding: 0.7rem 0;
+    }
+}
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" action="/listings" method="GET">
-    <input
-        class="form-control search-inp me-2"
-        type="search"
-        name="location"
-        placeholder="Search Destinations"
-    />
+    <div class="container-fluid">
 
-    <button class="btn search-btn" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>Search</button>
-</form>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Airbnb Your Home</a>
-        <% if(!currUser) { %>
-          <a class="nav-link active"  href="/signup"><b>signup</b></a>
-          <a class="nav-link" href="/login"><b>login</b></a>
-        <% } %>
-        <% if(currUser) { %>
-          <a class="nav-link" href="/logout">logout</a>
-        <% } %>
-      </div>
+        <!-- Logo -->
+        <a class="navbar-brand" href="/">
+            <i class="fa-solid fa-compass"></i>
+        </a>
+
+        <!-- Explore - ALWAYS VISIBLE -->
+        <div class="navbar-explore">
+            <a class="nav-link" href="/listings">
+                Explore
+            </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+            class="navbar-toggler ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible Content -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <!-- Search -->
+            <div class="navbar-nav ms-auto navbar-search">
+
+                <form
+                    class="d-flex"
+                    role="search"
+                    action="/listings"
+                    method="GET"
+                >
+                    <input
+                        class="form-control search-inp me-2"
+                        type="search"
+                        name="location"
+                        placeholder="Search Destinations"
+                    >
+
+                    <button class="btn search-btn" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Right Menu -->
+            <div class="navbar-nav ms-auto navbar-right">
+
+                <a class="nav-link" href="/listings/new">
+                    Airbnb Your Home
+                </a>
+
+                <% if (!currUser) { %>
+
+                    <a class="nav-link" href="/signup">
+                        <b>Signup</b>
+                    </a>
+
+                    <a class="nav-link" href="/login">
+                        <b>Login</b>
+                    </a>
+
+                <% } %>
+
+                <% if (currUser) { %>
+
+                    <a class="nav-link" href="/logout">
+                        Logout
+                    </a>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 </nav>
